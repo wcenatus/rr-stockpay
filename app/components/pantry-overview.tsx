@@ -71,7 +71,7 @@ export function PantryOverview({ items }: PantryOverviewProps) {
 
       <a
         className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#fffaf4] px-4 py-3 text-sm font-bold text-primary hover:bg-primary hover:text-white"
-        href="#"
+        href="/pantry"
       >
         View pantry
         <ArrowRightIcon />

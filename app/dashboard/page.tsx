@@ -7,6 +7,7 @@ import { RecipeCarousel } from "../components/recipe-carousel";
 const recipes: RecipeCardProps[] = [
   {
     title: "Creamy Garlic Pasta",
+    href: "/recipes/1",
     image: "/images/pasta-thumb.png",
     cookTime: "25 min",
     rating: "4.8",
@@ -72,7 +73,7 @@ export default function DashboardPage() {
       <main className="mx-auto w-full max-w-[1500px] px-4 pb-12 lg:px-8">
         <section className="relative isolate overflow-hidden rounded-4xl bg-[#fff6ee] px-5 py-10 shadow-sm shadow-[#8c6b3f]/5 lg:grid lg:min-h-[430px] lg:grid-cols-[0.78fr_1.22fr] lg:items-center lg:px-8">
           <div className="z-10 max-w-xl">
-            <p className="text-base text-primary">Good morning, Sarah!</p>
+            <p className="text-base text-primary">Good morning!</p>
             <h1 className="mt-5 [font-family:var(--font-noto-serif)] text-5xl font-bold leading-[1.02] tracking-tight text-primary sm:text-6xl lg:text-[68px]">
               What will you
               <span className="block">
@@ -92,13 +93,13 @@ export default function DashboardPage() {
                 <SparkleIcon />
                 Find Recipe Ideas
               </a>
-              <a
+              <Link
                 className="inline-flex h-14 items-center justify-center gap-3 rounded-xl border border-[#ddd3c5] bg-white/70 px-8 text-sm font-bold text-[#2d2a25] shadow-sm transition hover:bg-white"
-                href="#pantry"
+                href="/pantry"
               >
                 <ScanIcon />
                 Scan Pantry
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -135,13 +136,13 @@ export default function DashboardPage() {
             <h2 className="[font-family:var(--font-noto-serif)] text-2xl font-bold text-[#2d2a25]">
               Your ingredient highlights
             </h2>
-            <a
+            <Link
               className="hidden items-center gap-2 text-sm font-bold text-primary hover:text-[#df6040] sm:inline-flex"
-              href="#pantry"
+              href="/pantry"
             >
               View all ingredients
               <ArrowRightIcon />
-            </a>
+            </Link>
           </div>
 
           <div className="grid gap-4 lg:grid-cols-3" id="pantry">
@@ -156,7 +157,13 @@ export default function DashboardPage() {
 }
 
 function DashboardNavbar() {
-  const links = ["Home", "Recipes", "Pantry", "Community", "Shop"];
+  const links = [
+    { href: "/dashboard", label: "Home" },
+    { href: "#recipes", label: "Recipes" },
+    { href: "/pantry", label: "Pantry" },
+    { href: "#", label: "Community" },
+    { href: "#", label: "Shop" },
+  ];
 
   return (
     <header className="mx-auto flex w-full max-w-[1500px] items-center gap-5 px-4 py-5 lg:px-8">
@@ -170,18 +177,18 @@ function DashboardNavbar() {
       </Link>
 
       <nav className="hidden flex-1 items-center gap-2 rounded-2xl md:flex">
-        {links.map((link, index) => (
-          <a
+        {links.map((link) => (
+          <Link
             className={`inline-flex h-11 items-center gap-2 rounded-xl px-4 text-sm font-bold transition ${
-              index === 0
+              link.label === "Home"
                 ? "bg-[#f1ede5] text-primary"
                 : "text-[#2d2a25] hover:bg-white/70"
             }`}
-            href="#"
-            key={link}
+            href={link.href}
+            key={link.label}
           >
-            {link}
-          </a>
+            {link.label}
+          </Link>
         ))}
       </nav>
 
@@ -200,15 +207,6 @@ function DashboardNavbar() {
         type="button"
       >
         <BellIcon />
-      </button>
-      <button
-        className="hidden items-center gap-2 rounded-full bg-white/75 p-1 pr-3 text-sm font-bold text-[#2d2a25] md:flex"
-        type="button"
-      >
-        <span className="grid size-10 place-items-center rounded-full bg-[#e9d8c2] text-primary">
-          S
-        </span>
-        <ChevronDownIcon />
       </button>
     </header>
   );
@@ -336,23 +334,6 @@ function BellIcon() {
     >
       <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
       <path d="M13.7 21a2 2 0 0 1-3.4 0" />
-    </svg>
-  );
-}
-
-function ChevronDownIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="size-4"
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="1.8"
-      viewBox="0 0 24 24"
-    >
-      <path d="m6 9 6 6 6-6" />
     </svg>
   );
 }

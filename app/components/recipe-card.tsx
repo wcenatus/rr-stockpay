@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export type PantryStatus = "haveAll" | "haveSome" | "missing";
 
@@ -10,6 +11,7 @@ export type RecipeCardProps = {
   reviews: number;
   tags: string[];
   pantryStatus: PantryStatus[];
+  href?: string;
 };
 
 const pantryStyles: Record<PantryStatus, string> = {
@@ -19,6 +21,7 @@ const pantryStyles: Record<PantryStatus, string> = {
 };
 
 export function RecipeCard({
+  href,
   title,
   image,
   cookTime,
@@ -27,7 +30,7 @@ export function RecipeCard({
   tags,
   pantryStatus,
 }: RecipeCardProps) {
-  return (
+  const card = (
     <article className="group min-w-[260px] overflow-hidden rounded-2xl border border-[#eadfce] bg-white shadow-sm shadow-[#8c6b3f]/5 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-[#8c6b3f]/10">
       <div className="relative h-40 overflow-hidden">
         <Image
@@ -51,14 +54,22 @@ export function RecipeCard({
       </div>
 
       <div className="p-4">
-        <h3 className="text-base font-bold text-[#2d2a25]">{title}</h3>
+        <h3 className="text-base font-bold text-[#2d2a25]">
+          {href ? (
+            <Link className="hover:text-primary" href={href}>
+              {title}
+            </Link>
+          ) : (
+            title
+          )}
+        </h3>
         <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-[#625d52]">
           <span className="font-bold text-[#e3a217]">★ {rating}</span>
           <span>({reviews})</span>
-          {tags.map((tag) => (
+          {tags.map((tag, index) => (
             <span
               className="rounded-full bg-[#f7f0e7] px-2 py-1 text-[#625d52]"
-              key={tag}
+              key={`${tag}-${index}`}
             >
               {tag}
             </span>
@@ -85,6 +96,8 @@ export function RecipeCard({
       </div>
     </article>
   );
+
+  return card;
 }
 
 function BookmarkIcon() {

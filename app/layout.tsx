@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Noto_Sans, Noto_Serif } from "next/font/google";
+import { IngredientsProvider } from "./context/ingredients-context";
 import "./globals.css";
 
 const notoSans = Noto_Sans({
@@ -33,7 +34,9 @@ export default function RootLayout({
       lang="en"
       className={`${notoSans.variable} ${geistMono.variable} ${notoSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <IngredientsProvider>{children}</IngredientsProvider>
+      </body>
     </html>
   );
 }
